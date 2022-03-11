@@ -1,5 +1,16 @@
+.idea/
 node_modules/
 dist/
+build/
+tmp/
+temp/
 
-*.env
+.env
 
+# logs
+yarn-error.log
+log/access.log
+
+# cache
+.cache/
+.eslintcache
