@@ -1,0 +1,19 @@
+{
+  "name": "expressts-prisma-bp",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev --respawn ./src/index.ts",
+    "start": "node ./dist/index.js",
+    "build": "rm -rf ./dist && tsc"
+  },
+  "dependencies": {
+    "typescript": "^4.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.21",
+    "prisma": "^3.10.0",
+    "ts-node-dev": "^1.1.8"
+  }
+}
