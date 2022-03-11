@@ -1,7 +1,15 @@
 /* eslint-disable no-console */
+import { PrismaClient } from "@prisma/client";
 
-const main = () => {
-  console.log("Hello Prince");
+const prisma = new PrismaClient();
+
+const main = async () => {
+  const res = await prisma.user.findMany({
+    include: {
+      Profile: true,
+    },
+  });
+  console.log(res);
 };
 
-main();
+main().catch(console.error);
