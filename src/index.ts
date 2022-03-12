@@ -1,15 +1,21 @@
 /* eslint-disable no-console */
-import { PrismaClient } from "@prisma/client";
+import express from "express";
+import cors from "cors";
 
-const prisma = new PrismaClient();
+const PORT = process.env.PORT || 3000;
 
 const main = async () => {
-  const res = await prisma.user.findMany({
-    include: {
-      Profile: true,
-    },
+  const app = express();
+  app.use(cors());
+  app.use(express.json());
+
+  app.get("/", (_, res) => {
+    res.json({ success: true, message: "Hello World!" });
   });
-  console.log(res);
+
+  app.listen(PORT, () => {
+    console.log(`Server listening on http://localhost:${PORT}`);
+  });
 };
 
 main().catch(console.error);
