@@ -2,9 +2,12 @@
 import cors from "cors";
 import express from "express";
 import morgan from "morgan";
+import dotenv from "dotenv";
 
 import routes from "./routes";
-import errorHandler from "./middlewares/errorHandler";
+import errorHandler from "./middlewares/error-handler";
+
+dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 

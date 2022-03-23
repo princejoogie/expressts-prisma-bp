@@ -22,7 +22,6 @@ export const ErrorType = {
 };
 
 export type ErrorResponse = {
-  type: keyof typeof ErrorType;
   statusCode: number;
   message: string;
 };
