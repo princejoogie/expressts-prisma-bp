@@ -15,6 +15,7 @@ model User {
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt() @db.Timestamp(6)
   email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
   posts     Post[]
   likes     Like[]
 }

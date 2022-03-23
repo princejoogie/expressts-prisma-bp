@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { AppError } from "../utils/responses/error";
 
 export const errorHandler = (
-  err: AppError,
+  err: AppError | Error,
   _req: Request,
   res: Response,
   _next: NextFunction
@@ -14,7 +14,7 @@ export const errorHandler = (
 
   const error = new AppError(
     "InternalServerErrorException",
-    "Something went wrong"
+    err.message ?? "Something went wrong."
   );
 
   return res.status(error.StatusCode).json(error.JSON);

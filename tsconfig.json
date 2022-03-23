@@ -6,7 +6,6 @@
     "incremental": true,
     "noUnusedLocals": true,
     "alwaysStrict": true,
-    "baseUrl": ".",
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,

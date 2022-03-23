@@ -1,15 +1,15 @@
 import { InferType, object, string } from "yup";
 import { ValidatorSchema } from "../middlewares/validator";
 
-export const authBodySchema = object({
-  email: string().required(),
-  password: string().required(),
+export const loginBodySchema = object({
+  email: string().email().trim().required(),
+  password: string().trim().required(),
 });
 
-export type AuthBody = InferType<typeof authBodySchema>;
+export type LoginBody = InferType<typeof loginBodySchema>;
 
-export const authSchema: ValidatorSchema = {
-  body: authBodySchema,
+export const loginSchema: ValidatorSchema = {
+  body: loginBodySchema,
   params: undefined,
   query: undefined,
 };
