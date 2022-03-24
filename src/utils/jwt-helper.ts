@@ -3,9 +3,18 @@ import jwt from "jsonwebtoken";
 
 export const HASH_SALT = 10;
 
+export const isTokenValid = (token: string): boolean => {
+  try {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
 export const createAccessToken = (payload: any) => {
   return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET!, {
-    expiresIn: "15m",
+    expiresIn: "15s",
     algorithm: "HS256",
   });
 };
