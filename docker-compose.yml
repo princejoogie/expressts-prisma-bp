@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: "postgres"
+    container_name: postgres
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "expressts-prisma-bp"
+    restart: unless-stopped
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  server:
+    container_name: server
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/expressts-prisma-bp?schema=public"
+    restart: always
+
+volumes:
+  postgres:
