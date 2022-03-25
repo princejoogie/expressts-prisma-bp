@@ -6,7 +6,7 @@ const router = Router();
 
 router.get("/", (_, res) => {
   res.json({
-    message: "api v1",
+    message: "api v1 test",
   });
 });
 

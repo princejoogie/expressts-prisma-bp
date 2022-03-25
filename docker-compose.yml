@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   postgres:
-    image: "postgres"
+    image: postgres
     container_name: postgres
     hostname: postgres
     ports:
@@ -25,7 +25,7 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/expressts-prisma-bp?schema=public"
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/expressts-prisma-bp?schema=public
     restart: always
 
 volumes:
