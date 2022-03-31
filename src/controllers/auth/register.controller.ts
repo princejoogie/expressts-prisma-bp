@@ -4,7 +4,8 @@ import { RequestHandler } from "express";
 import prisma from "../../lib/prisma";
 import { LoginBody } from "../../dtos";
 import { AppError } from "../../utils/responses/error";
-import { createAndRefreshToken, HASH_SALT } from "../../utils/jwt-helper";
+import { HASH_SALT } from "../../utils/jwt-helper";
+import { SuccessType } from "../../utils/responses/types";
 
 export const registerController: RequestHandler<any, any, LoginBody> = async (
   req,
@@ -32,10 +33,15 @@ export const registerController: RequestHandler<any, any, LoginBody> = async (
         email,
         password: hashedPassword,
       },
+      select: {
+        email: true,
+        id: true,
+      },
     });
 
-    const token = createAndRefreshToken({ id: newUser.id }, res);
-    return res.json({ token });
+    return res
+      .status(SuccessType.Created)
+      .json({ success: true, user: newUser });
   } catch (e: any) {
     const error = new AppError("InternalServerErrorException", e.message);
     return next(error);

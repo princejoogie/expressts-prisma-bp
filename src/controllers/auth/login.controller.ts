@@ -4,7 +4,7 @@ import { RequestHandler } from "express";
 import { LoginBody } from "../../dtos";
 import { AppError } from "../../utils/responses/error";
 import prisma from "../../lib/prisma";
-import { createAndRefreshToken } from "../../utils/jwt-helper";
+import { SuccessType } from "../../utils/responses/types";
 
 export const loginController: RequestHandler<any, any, LoginBody> = async (
   req,
@@ -37,8 +37,7 @@ export const loginController: RequestHandler<any, any, LoginBody> = async (
       return next(error);
     }
 
-    const token = createAndRefreshToken({ id: user.id }, res);
-    return res.json({ token });
+    return res.status(SuccessType.OK).json({ success: true });
   } catch (e: any) {
     const error = new AppError("InternalServerErrorException", e.message);
     return next(error);

@@ -4,6 +4,7 @@ import checkJwt from "../../middlewares/check-jwt";
 
 const router = Router();
 
+router.post("/", checkJwt, updateController);
 router.post("/update", checkJwt, updateController);
 
 export default router;
