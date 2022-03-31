@@ -9,13 +9,8 @@ export const HASH_SALT = 10;
 
 export const REFRESH_TOKEN_KEY = "refreshToken";
 
-export const isTokenValid = (token: string): boolean => {
-  try {
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!);
-    return true;
-  } catch (err) {
-    return false;
-  }
+export const verifyAccessToken = (token: string): TokenPayload => {
+  return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!) as TokenPayload;
 };
 
 export const verifyRefreshToken = (refreshToken: string): TokenPayload => {
@@ -27,7 +22,7 @@ export const verifyRefreshToken = (refreshToken: string): TokenPayload => {
 
 export const createAccessToken = (payload: TokenPayload) => {
   return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET!, {
-    expiresIn: "15s",
+    expiresIn: "10m",
     algorithm: "HS256",
   });
 };

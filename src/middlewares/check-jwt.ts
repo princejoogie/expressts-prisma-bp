@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { isTokenValid } from "../utils/jwt-helper";
+import { verifyAccessToken } from "../utils/jwt-helper";
 import { AppError } from "../utils/responses/error";
 
 const checkJwt: RequestHandler = (req, _, next) => {
@@ -10,12 +10,15 @@ const checkJwt: RequestHandler = (req, _, next) => {
   }
 
   const token = authHeader.split(" ")[1];
-  if (!isTokenValid(token)) {
-    const error = new AppError("UnauthorizedException", "Invalid token");
+
+  try {
+    const { id } = verifyAccessToken(token);
+    req.userId = id;
+    return next();
+  } catch (e: any) {
+    const error = new AppError("UnauthorizedException", e.message);
     return next(error);
   }
-
-  return next();
 };
 
 export default checkJwt;
