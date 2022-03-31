@@ -17,7 +17,11 @@ export const refreshTokenController: RequestHandler = async (
     const refreshToken = req.cookies[REFRESH_TOKEN_KEY];
 
     if (!refreshToken) {
-      throw new AppError("UnauthorizedException", "Refresh token is missing");
+      const error = new AppError(
+        "UnauthorizedException",
+        "Refresh token is missing"
+      );
+      return next(error);
     }
 
     const { id } = verifyRefreshToken(refreshToken);

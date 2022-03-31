@@ -2,10 +2,10 @@ import bcrypt from "bcryptjs";
 import { RequestHandler } from "express";
 
 import prisma from "../../lib/prisma";
-import { LoginBody } from "../../dtos";
 import { AppError } from "../../utils/responses/error";
-import { HASH_SALT } from "../../utils/jwt-helper";
+import { LoginBody } from "../../dtos";
 import { SuccessType } from "../../utils/responses/types";
+import { createAndRefreshToken, HASH_SALT } from "../../utils/jwt-helper";
 
 export const registerController: RequestHandler<any, any, LoginBody> = async (
   req,
@@ -15,11 +15,7 @@ export const registerController: RequestHandler<any, any, LoginBody> = async (
   try {
     const { email, password } = req.body;
 
-    const user = await prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
+    const user = await prisma.user.findUnique({ where: { email } });
 
     if (user) {
       const error = new AppError("BadRequestException", "User already exists");
@@ -39,6 +35,7 @@ export const registerController: RequestHandler<any, any, LoginBody> = async (
       },
     });
 
+    createAndRefreshToken({ id: newUser.id }, res);
     return res
       .status(SuccessType.Created)
       .json({ success: true, user: newUser });
