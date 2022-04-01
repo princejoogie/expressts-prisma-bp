@@ -40,16 +40,33 @@ export const updatePostSchema: ValidatorSchema = {
 
 /* Get Post Schemas */
 
-export const getPostParamsSchema = yup.object().shape({
+export const getPostByIdParamsSchema = yup.object().shape({
   id: yup.string().min(1).required(),
 });
 
-export type GetPostParams = InferType<typeof getPostParamsSchema>;
+export type GetPostByIdParams = InferType<typeof getPostByIdParamsSchema>;
 
-export const getPostSchema: ValidatorSchema = {
+export const getPostByIdSchema: ValidatorSchema = {
   body: undefined,
-  params: getPostParamsSchema,
+  params: getPostByIdParamsSchema,
   query: undefined,
+};
+
+export const getAllPostQuerySchema = yup.object().shape({
+  limit: yup
+    .string()
+    .matches(/^[1-9][0-9]?$|^100$/)
+    .default("10"),
+  cursor: yup.string().min(1),
+  order: yup.string().oneOf(["asc", "desc"]).default("asc"),
+});
+
+export type GetAllPostQuery = InferType<typeof getAllPostQuerySchema>;
+
+export const getAllPostSchema: ValidatorSchema = {
+  body: undefined,
+  params: undefined,
+  query: getAllPostQuerySchema,
 };
 
 /* Delete Post Schemas */

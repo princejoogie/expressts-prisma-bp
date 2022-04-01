@@ -8,6 +8,10 @@ import {
 import { AppError } from "../../utils/responses/error";
 import { SuccessType } from "../../utils/responses/types";
 
+export interface RefreshTokenResponse {
+  accessToken: string;
+}
+
 export const refreshTokenController: RequestHandler = async (
   req,
   res,

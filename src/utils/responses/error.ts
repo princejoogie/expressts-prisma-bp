@@ -7,6 +7,8 @@ export class AppError extends Error {
     super(message);
     this.name = this.constructor.name;
     this.statusCode = ErrorType[errorType];
+    // eslint-disable-next-line no-console
+    console.error({ errorType, message });
   }
 
   get StatusCode() {

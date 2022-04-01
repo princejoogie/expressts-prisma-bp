@@ -7,11 +7,15 @@ import { LoginBody } from "../../dtos";
 import { SuccessType } from "../../utils/responses/types";
 import { createAndRefreshToken } from "../../utils/jwt-helper";
 
-export const loginController: RequestHandler<any, any, LoginBody> = async (
-  req,
-  res,
-  next
-) => {
+export interface LoginResponse {
+  accessToken: string;
+}
+
+export const loginController: RequestHandler<
+  any,
+  LoginResponse,
+  LoginBody
+> = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 

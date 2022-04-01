@@ -1,12 +1,14 @@
+import { Post } from "@prisma/client";
 import { RequestHandler } from "express";
 import { CreatePostBody } from "../../dtos/post.dto";
+
 import prisma from "../../lib/prisma";
 import { AppError } from "../../utils/responses/error";
 import { SuccessType } from "../../utils/responses/types";
 
 export const createController: RequestHandler<
   any,
-  any,
+  Post,
   CreatePostBody
 > = async (req, res, next) => {
   try {

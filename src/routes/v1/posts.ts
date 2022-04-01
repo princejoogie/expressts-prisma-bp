@@ -3,6 +3,8 @@ import checkJwt from "../../middlewares/check-jwt";
 import {
   createPostSchema,
   deletePostSchema,
+  getAllPostSchema,
+  getPostByIdSchema,
   updatePostSchema,
 } from "../../dtos/post.dto";
 import {
@@ -17,9 +19,9 @@ import { validator } from "../../middlewares/validator";
 const router = Router();
 
 // getAll
-router.get("/", getAllController);
+router.get("/", [validator(getAllPostSchema)], getAllController);
 // getById
-router.get("/:id", getByIdController);
+router.get("/:id", [validator(getPostByIdSchema)], getByIdController);
 // create
 router.post("/", [checkJwt, validator(createPostSchema)], createController);
 // update

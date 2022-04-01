@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { Post } from "@prisma/client";
 import { RequestHandler } from "express";
 import { UpdatePostBody, UpdatePostParams } from "../../dtos/post.dto";
 import prisma from "../../lib/prisma";
@@ -7,7 +8,7 @@ import { SuccessType } from "../../utils/responses/types";
 
 export const updateController: RequestHandler<
   UpdatePostParams,
-  any,
+  Post,
   UpdatePostBody
 > = async (req, res, next) => {
   try {
@@ -20,6 +21,21 @@ export const updateController: RequestHandler<
     }
 
     const { id } = req.params;
+    const post = await prisma.post.findUnique({ where: { id } });
+
+    if (!post) {
+      const error = new AppError("NotFoundException", "Post not found");
+      return next(error);
+    }
+
+    if (post.authorId !== req.userId) {
+      const error = new AppError(
+        "UnauthorizedException",
+        "You are not the author of this post"
+      );
+      return next(error);
+    }
+
     const { content, title } = req.body;
     const newPost: any = {};
 

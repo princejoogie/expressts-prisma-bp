@@ -1,10 +1,12 @@
 import { RequestHandler } from "express";
+import { Post } from "@prisma/client";
+
 import prisma from "../../lib/prisma";
 import { AppError } from "../../utils/responses/error";
 import { DeletePostParams } from "../../dtos/post.dto";
 import { SuccessType } from "../../utils/responses/types";
 
-export const deleteController: RequestHandler<DeletePostParams> = async (
+export const deleteController: RequestHandler<DeletePostParams, Post> = async (
   req,
   res,
   next

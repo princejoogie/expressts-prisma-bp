@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import { RequestHandler } from "express";
+import { User } from "@prisma/client";
 
 import prisma from "../../lib/prisma";
 import { AppError } from "../../utils/responses/error";
@@ -7,11 +8,16 @@ import { LoginBody } from "../../dtos";
 import { SuccessType } from "../../utils/responses/types";
 import { createAndRefreshToken, HASH_SALT } from "../../utils/jwt-helper";
 
-export const registerController: RequestHandler<any, any, LoginBody> = async (
-  req,
-  res,
-  next
-) => {
+export interface RegisterReponse {
+  accessToken: string;
+  user: Partial<User>;
+}
+
+export const registerController: RequestHandler<
+  any,
+  RegisterReponse,
+  LoginBody
+> = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -32,6 +38,7 @@ export const registerController: RequestHandler<any, any, LoginBody> = async (
       select: {
         email: true,
         id: true,
+        password: true,
       },
     });
 
