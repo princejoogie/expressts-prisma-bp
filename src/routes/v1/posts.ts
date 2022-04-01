@@ -1,10 +1,15 @@
 import { Router } from "express";
 import checkJwt from "../../middlewares/check-jwt";
-import { createPostSchema } from "../../dtos/post.dto";
 import {
-  updateController,
+  createPostSchema,
+  deletePostSchema,
+  updatePostSchema,
+} from "../../dtos/post.dto";
+import {
   createController,
+  deleteController,
   getAllController,
+  updateController,
 } from "../../controllers/post";
 import { validator } from "../../middlewares/validator";
 
@@ -12,20 +17,25 @@ const router = Router();
 
 /**
  * TODO:
- *  - [ ] create
- *  - [ ] getAllPosts
+ *  - [x] create
+ *  - [x] getAllPosts
  *  - [ ] getById
- *  - [ ] update
- *  - [ ] delete
+ *  - [x] update
+ *  - [x] delete
  */
 
 // create
 router.post("/", [checkJwt, validator(createPostSchema)], createController);
 // getAll
-router.get("/", [checkJwt], getAllController);
-// getById
+router.get("/", getAllController);
 // update
-router.put("/:id", checkJwt, updateController);
+router.put("/:id", [checkJwt, validator(updatePostSchema)], updateController);
 // delete
+router.delete(
+  "/:id",
+  [checkJwt, validator(deletePostSchema)],
+  deleteController
+);
+// getById
 
 export default router;

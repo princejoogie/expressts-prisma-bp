@@ -10,8 +10,6 @@ export const createController: RequestHandler<
   CreatePostBody
 > = async (req, res, next) => {
   try {
-    const { title, content } = req.body;
-
     if (!req.userId) {
       const error = new AppError(
         "UnauthorizedException",
@@ -19,6 +17,8 @@ export const createController: RequestHandler<
       );
       return next(error);
     }
+
+    const { title, content } = req.body;
 
     const post = await prisma.post.create({
       data: {
