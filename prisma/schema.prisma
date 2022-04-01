@@ -31,7 +31,7 @@ model Post {
   likes     Like[]
 
   // relations
-  User User? @relation(fields: [authorId], references: [id])
+  Author    User?    @relation(fields: [authorId], references: [id])
 }
 
 model Photo {

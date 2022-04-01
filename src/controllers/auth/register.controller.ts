@@ -35,10 +35,8 @@ export const registerController: RequestHandler<any, any, LoginBody> = async (
       },
     });
 
-    createAndRefreshToken({ id: newUser.id }, res);
-    return res
-      .status(SuccessType.Created)
-      .json({ success: true, user: newUser });
+    const accessToken = createAndRefreshToken({ id: newUser.id }, res);
+    return res.status(SuccessType.Created).json({ user: newUser, accessToken });
   } catch (e: any) {
     const error = new AppError("InternalServerErrorException", e.message);
     return next(error);

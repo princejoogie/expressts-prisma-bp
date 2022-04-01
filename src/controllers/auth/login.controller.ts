@@ -32,8 +32,8 @@ export const loginController: RequestHandler<any, any, LoginBody> = async (
       return next(error);
     }
 
-    createAndRefreshToken({ id: user.id }, res);
-    return res.status(SuccessType.OK).json({ success: true });
+    const accessToken = createAndRefreshToken({ id: user.id }, res);
+    return res.status(SuccessType.OK).json({ accessToken });
   } catch (e: any) {
     const error = new AppError("InternalServerErrorException", e.message);
     return next(error);

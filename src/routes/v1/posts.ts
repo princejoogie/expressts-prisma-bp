@@ -1,7 +1,11 @@
 import { Router } from "express";
-import { updateController, createController } from "../../controllers/post";
-import { createPostSchema } from "../../dtos/post.dto";
 import checkJwt from "../../middlewares/check-jwt";
+import { createPostSchema } from "../../dtos/post.dto";
+import {
+  updateController,
+  createController,
+  getAllController,
+} from "../../controllers/post";
 import { validator } from "../../middlewares/validator";
 
 const router = Router();
@@ -18,6 +22,7 @@ const router = Router();
 // create
 router.post("/", [checkJwt, validator(createPostSchema)], createController);
 // getAll
+router.get("/", [checkJwt], getAllController);
 // getById
 // update
 router.put("/:id", checkJwt, updateController);
