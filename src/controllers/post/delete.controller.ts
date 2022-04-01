@@ -36,7 +36,7 @@ export const deleteController: RequestHandler<DeletePostParams> = async (
 
     const deletedPost = await prisma.post.delete({ where: { id } });
 
-    return res.status(SuccessType.Created).json({ post: deletedPost });
+    return res.status(SuccessType.Created).json(deletedPost);
   } catch (e: any) {
     const error = new AppError("InternalServerErrorException", e.message);
     return next(error);

@@ -28,7 +28,7 @@ export const createController: RequestHandler<
       },
     });
 
-    return res.status(SuccessType.Created).json({ post });
+    return res.status(SuccessType.Created).json(post);
   } catch (e: any) {
     const error = new AppError("InternalServerErrorException", e.message);
     return next(error);

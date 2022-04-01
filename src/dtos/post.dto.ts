@@ -38,6 +38,20 @@ export const updatePostSchema: ValidatorSchema = {
   query: undefined,
 };
 
+/* Get Post Schemas */
+
+export const getPostParamsSchema = yup.object().shape({
+  id: yup.string().min(1).required(),
+});
+
+export type GetPostParams = InferType<typeof getPostParamsSchema>;
+
+export const getPostSchema: ValidatorSchema = {
+  body: undefined,
+  params: getPostParamsSchema,
+  query: undefined,
+};
+
 /* Delete Post Schemas */
 
 export const deletePostParamsSchema = yup.object().shape({

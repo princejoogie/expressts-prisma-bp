@@ -9,25 +9,19 @@ import {
   createController,
   deleteController,
   getAllController,
+  getByIdController,
   updateController,
 } from "../../controllers/post";
 import { validator } from "../../middlewares/validator";
 
 const router = Router();
 
-/**
- * TODO:
- *  - [x] create
- *  - [x] getAllPosts
- *  - [ ] getById
- *  - [x] update
- *  - [x] delete
- */
-
-// create
-router.post("/", [checkJwt, validator(createPostSchema)], createController);
 // getAll
 router.get("/", getAllController);
+// getById
+router.get("/:id", getByIdController);
+// create
+router.post("/", [checkJwt, validator(createPostSchema)], createController);
 // update
 router.put("/:id", [checkJwt, validator(updatePostSchema)], updateController);
 // delete
@@ -36,6 +30,5 @@ router.delete(
   [checkJwt, validator(deletePostSchema)],
   deleteController
 );
-// getById
 
 export default router;

@@ -31,7 +31,7 @@ export const updateController: RequestHandler<
       data: newPost,
     });
 
-    return res.status(SuccessType.Created).json({ post: updatedPost });
+    return res.status(SuccessType.Created).json(updatedPost);
   } catch (e: any) {
     const error = new AppError("InternalServerErrorException", e.message);
     return next(error);
