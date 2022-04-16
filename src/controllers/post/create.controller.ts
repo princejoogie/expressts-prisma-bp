@@ -20,14 +20,19 @@ export const createController: RequestHandler<
       return next(error);
     }
 
-    const { title, content } = req.body;
+    const { title, content, photoUrls } = req.body;
+    const photos = photoUrls ? photoUrls.map((url) => ({ url })) : undefined;
 
     const post = await prisma.post.create({
       data: {
         title,
         content,
+        photos: photos
+          ? { createMany: { data: photos, skipDuplicates: true } }
+          : undefined,
         Author: { connect: { id: req.userId } },
       },
+      include: { photos: true },
     });
 
     return res.status(SuccessType.Created).json(post);

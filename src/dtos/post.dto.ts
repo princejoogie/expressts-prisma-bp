@@ -7,6 +7,7 @@ import { ValidatorSchema } from "../middlewares/validator";
 export const createPostBodySchema = yup.object().shape({
   title: yup.string().min(1).required(),
   content: yup.string().min(1).required(),
+  photoUrls: yup.array().of(yup.string().required()),
 });
 
 export type CreatePostBody = InferType<typeof createPostBodySchema>;
@@ -22,6 +23,7 @@ export const createPostSchema: ValidatorSchema = {
 export const updatePostBodySchema = yup.object().shape({
   title: yup.string().min(1),
   content: yup.string().min(1),
+  photoUrls: yup.array().of(yup.string().required()),
 });
 
 export type UpdatePostBody = InferType<typeof updatePostBodySchema>;

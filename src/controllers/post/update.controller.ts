@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-import { Post } from "@prisma/client";
 import { RequestHandler } from "express";
 import { UpdatePostBody, UpdatePostParams } from "../../dtos/post.dto";
 import prisma from "../../lib/prisma";
@@ -8,7 +6,7 @@ import { SuccessType } from "../../utils/responses/types";
 
 export const updateController: RequestHandler<
   UpdatePostParams,
-  Post,
+  any,
   UpdatePostBody
 > = async (req, res, next) => {
   try {
@@ -45,6 +43,7 @@ export const updateController: RequestHandler<
     const updatedPost = await prisma.post.update({
       where: { id },
       data: newPost,
+      include: { photos: true },
     });
 
     return res.status(SuccessType.Created).json(updatedPost);

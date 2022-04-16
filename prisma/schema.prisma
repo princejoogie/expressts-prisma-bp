@@ -31,7 +31,7 @@ model Post {
   likes     Like[]
 
   // relations
-  Author    User?    @relation(fields: [authorId], references: [id])
+  Author User? @relation(fields: [authorId], references: [id])
 }
 
 model Photo {
@@ -42,17 +42,18 @@ model Photo {
   postId    String
 
   // relations
-  Post Post @relation(fields: [postId], references: [id])
+  Post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
 model Like {
-  id        String   @id @default(uuid())
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt() @db.Timestamp(6)
   postId    String
   userId    String
 
   // relations
-  Post Post @relation(fields: [postId], references: [id])
+  Post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
   User User @relation(fields: [userId], references: [id])
+
+  @@unique([postId, userId])
 }
